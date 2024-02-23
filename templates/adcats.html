@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Blog</title>
+</head>
+<nav class="navbar">
+    <div class="navbar-left">
+        <a class="nav-link active postbutton" aria-current="page" href="{% url 'home' %}"><b>HOME</b></a>
+    </div>
+    <div class="navbar-right">
+        <a class="nav-link button-3" href="{% url 'dashboard' %}">Profile</a>
+        <a class="nav-link button-4" href="{% url 'logout' %}">Logout</a>
+    </div>
+</nav>
+<body class="create">
+    {% if messages %}
+        {% for message in messages %}
+        <div style="text-align: center;">
+           <h2 style="color: #b22222;">{{message}}</h2>
+        </div>
+        {% endfor %}
+        {% endif %}
+    <div class="container">
+        <div class="form-container animated-border">
+            <h1 class="page-heading">Create a New Category</h1>
+            <form class="blog-form" action="addcats" method="post">
+                {% csrf_token %}
+                <label>New Category:</label>
+                <input type="text" name="cat">
+                <div style="text-align: center;">
+                <button type="submit" class="postbutton">ADD</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

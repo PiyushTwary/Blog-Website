@@ -1,0 +1,41 @@
+{% extends 'base.html'%}
+{% block content %}
+<div style="text-align: center;">
+  {% if messages %}
+  {% for message in messages %}
+  <div style="text-align: center;">
+     <h2 style="color: #fff;">{{message}}</h2>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+<div class="content" style="background-color: #333 ;">
+    <div class="left animated-border" style="margin-top: 5% ; margin-right: 10px;">
+        <div style="margin-top: 10px; margin-bottom: 15px;">
+           <h1 style="color: aliceblue; margin-left: 10px;">Recent Blog Posts</h1>
+        </div>
+        {% for post in posts  %}
+        <div class="posts" style=" border: 2px solid; border-color: aqua;">
+          <a style="text-decoration: none; color: #fff;" href="{% url 'detail' post.pk %}"><h3 style="margin-left: 10px;">{{ post.title }}</h3></a>
+          <p style="margin-left: 10px;">Date Created: {{post.post_date}}</p>
+          <hr>
+          <h6 style="margin-left: 10px;">Author: {{ post.author }}</h6>
+          <hr style="width: 15%;">
+          <p style="margin-left: 10px; margin-right: 10px;"><b>Category:</b><a style="text-decoration: none; color: yellow;" href="{% url 'catPage' post.category %}"> {{ post.category }}</a></p>
+          <hr style="width: 15%;">
+          <p style="margin-left: 10px; margin-right: 10px;">{{ post.body|safe }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="right animated-border" style="margin-top: 5%;">
+      <div style="margin-top: 10px; margin-bottom: 15px;">
+        <h1 style="color: aliceblue; margin-left: 10px;">Categories</h1>
+      </div>
+      <div class="buttons-container">
+        {%for cat in cats %}
+        <a href="{% url 'catPage' cat.name %}" style="color: #fff;" class="button6">{{cat.name}}</a>
+        {% endfor %}
+    </div>
+    </div>
+</div>
+{% endblock content %}

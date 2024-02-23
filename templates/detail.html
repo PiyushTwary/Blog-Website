@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'main.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Detailed Blog</title>
+    </head>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a class="nav-link active postbutton" aria-current="page" href="{% url 'home' %}"><b>HOME</b></a>
+        </div>
+        <div class="navbar-right">
+            <a class="nav-link button-3" href="{% url 'dashboard'%}">Profile</a>
+            <a class="nav-link button-4" href="{% url 'logout' %}">Logout</a>
+        </div>
+    </nav>
+    <div style="text-align: center;">
+        {% if messages %}
+        {% for message in messages %}
+        <div style="text-align: center;">
+           <h2 style="color: #fff;">{{message}}</h2>
+        </div>
+        {% endfor %}
+        {% endif %}
+      </div>
+    <body style="margin: 0;padding: 0; background-color: #333;">
+        <div class="container1">
+            {% for post in posts%}
+            <div class="content1 animated-border">
+                <div class="title">
+                    <h1>{{post.title}}</h1>
+                    <p>Date Created: {{post.post_date}}</p>
+                    <hr  width="50%">
+                </div>
+                <div class="author">
+                    <h3>Author of the Blog: {{post.author}}</h3>
+                    <hr width="25%">
+                    <h3>Category:<a style="text-decoration: none; color: yellow;" href="{% url 'catPage' post.category %}"> {{post.category}}</a></h3>
+                    <hr>
+                </div>
+                <div class="description">
+                    <p>{{post.body|safe}}</p>
+                </div>
+                <hr>
+                <div style="text-align: center; margin-top: 20px; ">
+                <a class="postbutton" href="{% url 'like' pk=post.pk %}">Like {{post.likes.count}}</a>
+                <a class="postbutton" href="{% url 'dislike' pk=post.pk %}">Dislike {{post.dislikes.count}}</a>
+                <a class="postbutton" href="{% url 'home' %}">Back</a>
+                </div>
+            </div>    
+        </div>
+        {% if post.author == user%}
+        <div style="margin-top: 15px; text-align: center; color: #fff;">
+            <a class="postbutton" href="{%url 'edit' post.pk %} ">Edit Blog</a>
+            </div>
+        <div style="text-align: center; color: #fff; margin-top: 30px; margin-bottom: 20px;">
+            <a class="postbutton" href="{%url 'delete' post.pk %}">Delete Blog</a>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </body>
+</html>

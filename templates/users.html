@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+{% for user in users %}
+<div class="user-card" style="color:#fff;">
+    <div class="user-pic">
+        <img src="{{ user.profilePic.url }}" alt="Profile Picture">
+        </div>
+        <div class="user-name">
+            <h3 style="margin-bottom: 20px;">{{ user.name }}</h3>
+        </div>
+        <div style="margin-bottom: 10px;">
+        <a class="postbutton" href="{% url 'userDetail' user.pk %}">View Details</a>
+        </div>
+    </div>
+<style>
+    .user-card {
+        margin: 20px; 
+        margin-left: 27%;
+        text-align: center;
+        border: 2px solid aqua; 
+        border-radius: 10px;
+        padding: 10px;
+        width: 50%; 
+        box-sizing: border-box;
+    }
+    
+    .user-pic {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: 0 auto 10px;
+    }
+    
+    .user-pic img {
+        width: 100%;
+        height: auto;
+    }
+    
+</style>
+{% endfor %}
+{% endblock content %}

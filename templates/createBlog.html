@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Blog</title>
+</head>
+<nav class="navbar">
+    <div class="navbar-left">
+        <a class="nav-link active postbutton" aria-current="page" href="{% url 'home' %}">Home</a>
+    </div>
+    <div class="navbar-right">
+        <a class="nav-link button-3" href="{% url 'dashboard' %}">Profile</a>
+        <a class="nav-link button-4" href="{% url 'logout' %}">Logout</a>
+    </div>
+</nav>
+<body class="create">
+    {% if messages %}
+        {% for message in messages %}
+        <div style="text-align: center;">
+           <h2 style="color: #b22222;">{{message}}</h2>
+        </div>
+        {% endfor %}
+        {% endif %}
+    <div class="container">
+        <div class="form-container animated-border">
+            <h1 class="page-heading">Write a New Blog</h1>
+            <form class="blog-form" action="createBlog" method="post">
+                {% csrf_token %}
+                <label>Title:</label>
+                {{ post_form.title }}
+                <label>Category:</label>
+                {{ post_form.category }}
+                <label>Body:</label>
+                {{ post_form.body }}
+                <div style="text-align: center;">
+                <button type="submit" class="postbutton">Post</button>
+                </div>
+            </form>
+            {{post_form.media}}
+        </div>
+    </div>
+</body>
+</html>

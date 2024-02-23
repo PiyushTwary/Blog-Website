@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static%}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a class="nav-link active postbutton" aria-current="page" href="{% url 'home'%}"><b>HOME</b></a>
+        </div>
+        <div class="navbar-middle">
+            <a class="nav-link create-post" href="{% url 'createBlog' %}">Create Blog</a>
+        </div>
+        <div class="navbar-right">
+            <a class="nav-link button-4" href="{% url 'logout' %}">Logout</a>
+        </div>
+    </nav>
+<body style="background-color: #333;">
+    <div class="content" style="background-color: #333 ;">
+        <div class="left animated-border" style="margin-top: 5% ; margin-right: 10px;">
+            {% if messages %}
+            {% for message in messages %}
+            <div style="text-align: center;">
+               <h2 style="color: #fff;">{{message}}</h2>
+            </div>
+            {% endfor %}
+            {% endif %}
+            <div style="margin-top: 10px; margin-bottom: 15px;">
+               <h1 style="color: aliceblue; margin-left: 10px;">Your Blog Posts</h1>
+            </div>
+            {% for post in posts  %}
+            <div class="posts" style=" border: 2px solid; border-color: aqua;">
+              <a style="text-decoration: none; color: #fff;" href="{% url 'detail' post.pk %}"><h3 style="margin-left: 10px;">{{ post.title }}</h3></a>
+              <p style="margin-left: 10px;">Date Created: {{post.post_date}}</p>
+              <hr>
+              <p style="margin-left: 10px; margin-right: 10px;"><b>Category:</b><a style="text-decoration: none; color: yellow;" href="{% url 'catPage' post.category %}"> {{ post.category }}</a></p>
+              <hr>
+              <p style="margin-left: 10px; margin-right: 10px;">{{ post.body|safe }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="right animated-border" style="margin-top: 5%; color:#fff;">
+            {% for info in userInfo %}
+            {% if info.profilePic %}
+            <div class="profile-picture" style="margin-left: 10%;">
+                <img src="{{info.profilePic.url}}" alt="Profie Pic">
+            </div>
+            {% else %}
+            <div class="profile-picture" style="margin-left: 10%;">
+                <img src="{% static 'default.jpg' %}" alt="Profie Pic">
+            </div>
+            {% endif %}
+            <div class="profile-info">
+                <div>
+                <h3 style="margin-left: 10px;">Name:</h3><p style="margin-left: 10px;">{{info.name}} </p>
+                </div>
+                <div>
+                <h3 style="margin-left: 10px;">Contact:</h3><p style="margin-left: 10px;">{{info.contact}}</p>
+                </div>
+                <div>
+                <h3 style="margin-left: 10px;">E-mail:</h3><p style="margin-left: 10px;">{{info.email}}</p>
+                <div style="text-align: center; margin-top: 30px;margin-bottom: 30px;">
+                    <a class="button6" href="{% url 'editProfile' info.pk%}">Update Profile</a>
+                </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        </div>
+    </div> 
+</body>
+</html>
